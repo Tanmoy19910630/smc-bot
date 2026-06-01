@@ -13,9 +13,9 @@ nest_asyncio.apply()
 #  ⚙️  YOUR CONFIG — FILL THESE IN
 # ════════════════════════════════════════════════════════════════
 
-TELEGRAM_TOKEN   = "YOUR_BOT_TOKEN_HERE"    # from @BotFather
-TELEGRAM_CHAT_ID = "YOUR_CHAT_ID_HERE"      # from @userinfobot
-
+import os
+TELEGRAM_TOKEN   = os.environ.get("TELEGRAM_TOKEN", "")
+TELEGRAM_CHAT_ID = os.environ.get("TELEGRAM_CHAT_ID", "")
 CAPITAL          = 100_000
 RISK_PCT         = 0.015
 MAX_POSITIONS    = 2
@@ -444,14 +444,3 @@ print("""
 
 # Run once immediately
 run_and_send()
-
-# Schedule daily at 3:45 PM IST
-import schedule
-schedule.every().day.at("15:45").do(run_and_send)
-print("\n⏰ Scheduler active — runs every day at 3:45 PM IST")
-print("   Keep this Colab tab open.\n")
-
-while True:
-    schedule.run_pending()
-    time.sleep(60)
-          
