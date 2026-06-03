@@ -1,0 +1,9 @@
+{
+  "capital": 100000,
+  "start_capital": 100000,
+  "month_start_cap": 100000,
+  "open_trades": [],
+  "closed_trades": [],
+  "month": "2026-06",
+  "trade_counter": 0
+}
