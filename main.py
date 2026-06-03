@@ -79,7 +79,7 @@ HIGH_CONVICTION_SCORE  = 5
 HIGH_CONVICTION_ALLOC  = 0.35
 STANDARD_ALLOC_FRAC    = 1.0 / MAX_POSITIONS
 
-STATE_FILE = "smc_state.json"
+STATE_FILE = "state.json"
 IST        = ZoneInfo("Asia/Kolkata")
 
 # ════════════════════════════════════════════════════════════════
