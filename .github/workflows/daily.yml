@@ -1,7 +1,9 @@
 name: SMC Daily Bot
 on:
   schedule:
-    - cron: '15 10 * * 1-5'
+    # Uses native timezone configuration to trigger strictly in India's window
+    - cron: '43 15 * * 1-5'
+      timezone: 'Asia/Kolkata'
   workflow_dispatch:
 jobs:
   run:
@@ -12,9 +14,10 @@ jobs:
         with:
           python-version: '3.11'
       - name: Install
-        run: pip install yfinance pandas numpy ta python-telegram-bot nest_asyncio schedule pytz
+        run: pip install yfinance pandas numpy ta python-telegram-bot nest_asyncio pytz
       - name: Run
         env:
           TELEGRAM_TOKEN: ${{ secrets.TELEGRAM_TOKEN }}
           TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
         run: python main.py
+
