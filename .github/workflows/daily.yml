@@ -1,45 +1,47 @@
 name: SMC Daily Bot
+
 on:
   schedule:
-    # Triggers at 3:43 PM IST (Asia/Kolkata) Monday-Friday
-    - cron: '43 15 * * 1-5'
-      timezone: 'Asia/Kolkata'
-  workflow_dispatch:
+    - cron: '15 10 * * 1-5'   # 3:45 PM IST (10:15 UTC) Mon-Fri
+  workflow_dispatch:            # manual run button
+
 jobs:
   run:
     runs-on: ubuntu-latest
     permissions:
       contents: write
+
     steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-python@v4
+      - name: Checkout repo
+        uses: actions/checkout@v3
+
+      - name: Setup Python
+        uses: actions/setup-python@v4
         with:
           python-version: '3.11'
-      
-      - name: Install Dependencies
+
+      - name: Install dependencies
         run: pip install yfinance pandas numpy ta python-telegram-bot nest_asyncio pytz
-      
-      - name: Run Bot Execution
+
+      - name: Run bot
         env:
           TELEGRAM_TOKEN: ${{ secrets.TELEGRAM_TOKEN }}
           TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
         run: python main.py
 
-      - name: Save and Commit State Ledger
+      - name: Save state
         run: |
           git config --global user.name "github-actions[bot]"
           git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          
           if [ -f state.json ]; then
             git add state.json
             if ! git diff --cached --quiet; then
-              git commit -m "Automated state tracking update [Skip CI]"
+              git commit -m "state update [skip ci]"
               git push origin HEAD:${{ github.ref_name }}
-              echo "✅ state.json successfully saved to repository!"
+              echo "✅ State saved"
             else
-              echo "ℹ️ No changes detected in state.json."
+              echo "ℹ️ No state changes"
             fi
           else
-            echo "⚠️ state.json was not found."
+            echo "⚠️ state.json not found"
           fi
-          
