@@ -547,9 +547,19 @@ def market_regime_filter():
         ema200 = nifty["Close"].ewm(span=200, adjust=False).mean()
         nc = _safe(nifty["Close"].iloc[-1])
         ev = _safe(ema200.iloc[-1])
+        
+        # 🔍 ADDED DEBUG PRINTS
+        print("\n=== NIFTY REGIME DEBUG ===")
+        print(f"Nifty Close : {nc:.2f}")
+        print(f"EMA200      : {ev:.2f}")
+        print(nifty[['Close']].tail())
+        print("==========================\n")
+        
         return nc > ev, nc, ev
-    except Exception:
+    except Exception as e:
+        print(f"Regime filter debug error: {e}")
         return True, 0, 0
+
 
 # ════════════════════════════════════════════════════════════════
 #  DYNAMIC POSITION SIZING
